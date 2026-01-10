@@ -446,37 +446,53 @@ const DetailPage = () => {
         };
 
         // --- App Layout ---
-        const App = () => {
-            const [theme, setTheme] = useState('light');
-            const toggleTheme = () => setTheme(prev => prev === 'light' ? 'dark' : 'light');
+   const App = () => {
+    const [theme, setTheme] = useState('light');
+    const toggleTheme = () => setTheme(prev => prev === 'light' ? 'dark' : 'light');
 
-            useEffect(() => {
-                const isLight = theme === 'light';
-                document.documentElement.setAttribute('data-theme', theme);
-                document.body.className = isLight ? 'selection-light' : 'selection-dark';
-                document.body.style.backgroundColor = isLight ? '#ffffff' : '#000000';
-                document.body.style.color = isLight ? '#000000' : '#ffffff';
-                document.body.style.fontFamily = isLight ? "'Playfair Display', serif" : "'Inter', sans-serif";
-            }, [theme]);
+    // 📍 지금 보고 있는 페이지 주소 가져오기
+    const location = useLocation();
+    const isDetailPage = location.pathname.startsWith('/work/'); // /work/로 시작하면 true
 
-            return (
-                <ThemeContext.Provider value={{ theme, toggleTheme }}>
-                    <Header />
-                    <Routes>
-                        <Route path="/" element={<HomePage />} />
-                        <Route path="/motion" element={<MotionPage />} />
-                        <Route path="/illustration" element={<IllustrationPage />} />
-                        <Route path="/photography" element={<PhotographyPage />} />
-                        <Route path="/about" element={<AboutPage />} />
-                        <Route path="/work/:id" element={<DetailPage />} />
-                        <Route path="*" element={<Navigate to="/" />} />
-                    </Routes>
-                    <button onClick={toggleTheme} className={`fixed bottom-10 right-10 z-[200] flex items-center justify-center transition-all duration-500 shadow-2xl ${theme === 'light' ? 'bg-white border-2 border-black text-black w-14 h-14 md:w-16 md:h-16 hover:shadow-[4px_4px_0px_0px_black]' : 'bg-white/10 backdrop-blur-2xl text-white w-14 h-14 md:w-16 md:h-16 rounded-full border border-white/20 hover:scale-110 active:scale-95'}`}>
-                        {theme === 'light' ? <Moon size={28} /> : <Sun size={28} />}
-                    </button>
-                </ThemeContext.Provider>
-            );
-        };
+    useEffect(() => {
+        const isLight = theme === 'light';
+        document.documentElement.setAttribute('data-theme', theme);
+        document.body.className = isLight ? 'selection-light' : 'selection-dark';
+        document.body.style.backgroundColor = isLight ? '#ffffff' : '#000000';
+        document.body.style.color = isLight ? '#000000' : '#ffffff';
+        document.body.style.fontFamily = isLight ? "'Playfair Display', serif" : "'Inter', sans-serif";
+    }, [theme]);
+
+    return (
+        <ThemeContext.Provider value={{ theme, toggleTheme }}>
+            <Header />
+            <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/motion" element={<MotionPage />} />
+                <Route path="/illustration" element={<IllustrationPage />} />
+                <Route path="/photography" element={<PhotographyPage />} />
+                <Route path="/about" element={<AboutPage />} />
+                <Route path="/work/:id" element={<DetailPage />} />
+                <Route path="*" element={<Navigate to="/" />} />
+            </Routes>
+
+            {/* 🔹 디테일 페이지가 아니면 버튼 보여주기 */}
+            {!isDetailPage && (
+                <button
+                    onClick={toggleTheme}
+                    className={`fixed bottom-10 right-10 z-[200] flex items-center justify-center transition-all duration-500 shadow-2xl ${
+                        theme === 'light'
+                            ? 'bg-white border-2 border-black text-black w-14 h-14 md:w-16 md:h-16 hover:shadow-[4px_4px_0px_0px_black]'
+                            : 'bg-white/10 backdrop-blur-2xl text-white w-14 h-14 md:w-16 md:h-16 rounded-full border border-white/20 hover:scale-110 active:scale-95'
+                    }`}
+                >
+                    {theme === 'light' ? <Moon size={28} /> : <Sun size={28} />}
+                </button>
+            )}
+        </ThemeContext.Provider>
+    );
+};
+
 
         const start = () => {
             const root = createRoot(document.getElementById('root'));
