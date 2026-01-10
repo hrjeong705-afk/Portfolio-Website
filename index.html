@@ -1,6 +1,6 @@
 
 <!DOCTYPE html>
-<html lang="ko" data-theme="dark">
+<html lang="ko" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -422,7 +422,7 @@
 
         // --- App Layout ---
         const App = () => {
-            const [theme, setTheme] = useState('dark');
+            const [theme, setTheme] = useState('light');
             const toggleTheme = () => setTheme(prev => prev === 'light' ? 'dark' : 'light');
 
             useEffect(() => {
