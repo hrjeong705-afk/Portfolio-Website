@@ -1,0 +1,464 @@
+
+<!DOCTYPE html>
+<html lang="ko" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>H_Jeong® | Portfolio</title>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    
+    <!-- Scripts -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <style>
+        :root { --bg: #ffffff; --fg: #000000; }
+        [data-theme="dark"] { --bg: #000000; --fg: #ffffff; }
+        
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg);
+            color: var(--fg);
+            transition: background-color 0.5s cubic-bezier(0.4, 0, 0.2, 1), color 0.5s ease;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 0px; display: none; }
+        
+        .font-serif { font-family: 'Playfair Display', serif; }
+        .font-sans { font-family: 'Inter', sans-serif; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fadeIn { animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        
+        .selection-light::selection { background: #000; color: #fff; }
+        .selection-dark::selection { background: #3b82f6; color: #fff; }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background-color: currentColor;
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after { width: 100%; }
+
+        /* Masonry */
+        .columns-1 { column-count: 1; }
+        @media (min-width: 768px) { .columns-2 { column-count: 2; } .columns-3 { column-count: 3; } }
+        @media (min-width: 1024px) { .columns-4 { column-count: 4; } }
+    </style>
+
+    <script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@19.0.0",
+    "react-dom": "https://esm.sh/react-dom@19.0.0",
+    "react-dom/client": "https://esm.sh/react-dom@19.0.0/client",
+    "react-router-dom": "https://esm.sh/react-router-dom@6.22.3?external=react,react-dom",
+    "lucide-react": "https://esm.sh/lucide-react@0.344.0?external=react",
+    "react/": "https://esm.sh/react@^19.2.3/"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+<body class="selection-dark">
+    <div id="root"></div>
+
+    <script type="text/babel" data-type="module" data-presets="react,typescript">
+        import React, { useState, useEffect, createContext, useContext, StrictMode } from 'react';
+        import { createRoot } from 'react-dom/client';
+        import { HashRouter, Routes, Route, Link, useLocation, useParams, Navigate } from 'react-router-dom';
+        import { Menu, X, Sun, Moon, Instagram, Linkedin, Mail } from 'lucide-react';
+
+        // --- Context ---
+        const ThemeContext = createContext();
+        const useTheme = () => useContext(ThemeContext);
+
+        // --- Constants ---
+        const GRAPHIC_WORKS = [
+            { id: 'graphic-1', title: 'CIAO', category: 'Branding', thumbnail: './img/thumnails/ciao.jpg', description: 'CIAO! is a pasta to-go restaurant offering, a fresh, modern take on Italian food.The goal was to capture the casual, youthful spirit of a pasta to-go brand while keepinga bold and modern edge.',
+            
+            images: ['./img/G1/1.jpg', './img/G1/2.jpg', './img/G1/3.jpg', './img/G1/4.jpg'] },
+            { id: 'graphic-2', title: 'one zero', category: 'Branding & Package Design', thumbnail: './img/thumnails/onezero.jpg', description: 'ONEZERO is a sparkling protein water brand. The goal was  goal was to show the fizzy and refreshing feeling of sparkling drinks.', 
+            images: ['./img/G2/1.jpg', './img/G2/2.jpg', './img/G2/3.jpg', './img/G2/4.jpg','./img/G2/5.jpg','./img/G2/6.jpg'] },
+            { id: 'graphic-3', title: 'Thomas Miller', category: 'Book & Editorial Design', thumbnail: './img/thumnails/TM.jpg', description: 'Thomas Miller was among the pioneers of African American designers celebrated at the DuSable Museum of African American Hisotry in Chicago in 2000. The goal was to go back to both learn more about his legacy and practice my editorial design skills.', 
+            images: ['./img/G3/1.jpg', './img/G3/2.jpg', './img/G3/3.jpg', './img/G3/4.jpg', './img/G3/5.jpg', './img/G3/6.jpg','./img/G3/7.jpg'] },
+            { id: 'graphic-4', title: 'RASTRO', category: 'Branding & Package Design', thumbnail: './img/thumnails/Rastro.jpg', description: 'Rastro means “trail” or “trace” in Spanish. It’s about the journey from agave to spirit — raw, earthy, and made for people who care about the process as much as the product The goal was to show its process and how something raw and grounded can still feel premium.', 
+            images: ['./img/G4/1.jpg', './img/G4/2.jpg', './img/G4/3.jpg', './img/G4/4.jpg'] },
+            { id: 'graphic-5', title: 'Tropina', category: 'Branding & Package Design', thumbnail: './img/thumnails/Tropina.jpg', description: 'Tropina is a coconut water brand. The goal was to capture the lightness and freshness of coconut water through the design itself.', 
+            images: ['./img/G5/1.jpg', './img/G5/2.jpg', './img/G5/3.jpg', './img/G5/4.jpg'] },
+            { id: 'graphic-6', title: 'aeste', category: 'Branding & Package Design', thumbnail: './img/thumnails/aeste.jpg', description: 'Aesté is a brand that offers premium aromatherapy and home fragrance products. The goal was to express the calm, elegant world of scents — something that feels still, intentional, and quietly luxurious.',
+             images: ['./img/G6/1.jpg', './img/G6/2.jpg', './img/G6/3.jpg', './img/G6/4.jpg'] },
+           // { id: 'graphic-7', title: 'Metrique Sans Font Lab', category: 'graphic', thumbnail: 'https://picsum.photos/seed/agency7/800/1000', description: '건축적 비례에서 영감을 받아 설계된 기하학적 산세리프 서체 Metrique의 개발 과정입니다.', images: ['https://picsum.photos/seed/a7-1/1200/800'] },
+           // { id: 'graphic-8', title: 'Root Organic Brewery', category: 'graphic', thumbnail: 'https://picsum.photos/seed/agency8/800/1000', description: '흙과 뿌리의 질감을 핸드 드로잉 스타일로 풀어낸 유기농 맥주 브랜딩입니다.', images: ['https://picsum.photos/seed/a8-1/1200/800'] },
+           // { id: 'graphic-9', title: 'Obsidian Tech Vision', category: 'graphic', thumbnail: 'https://picsum.photos/seed/agency9/800/1000', description: '미래 지향적 하이테크 솔루션 기업 Obsidian의 비주얼 아이덴티티입니다.', images: ['https://picsum.photos/seed/a9-1/1200/800'] },
+           // { id: 'graphic-10', title: 'Studio Mono Arch', category: 'graphic', thumbnail: 'https://picsum.photos/seed/agency10/800/1000', description: '미니멀리즘 건축 사무소 Studio Mono의 브랜딩입니다.', images: ['https://picsum.photos/seed/a10-1/1200/800'] },
+           // { id: 'graphic-11', title: 'Iris Optical Concept', category: 'graphic', thumbnail: 'https://picsum.photos/seed/agency11/800/1000', description: '시선과 초점을 테마로 한 광학 기기 브랜드 Iris의 컨셉 디자인입니다.', images: ['https://picsum.photos/seed/a11-1/1200/800'] },
+           // { id: 'graphic-12', title: 'Heredity Heritage Kit', category: 'graphic', thumbnail: 'https://picsum.photos/seed/agency12/800/1000', description: '가문의 역사를 보존하는 프리미엄 아카이빙 서비스 Heredity의 디자인입니다.', images: ['https://picsum.photos/seed/a12-1/1200/800'] }
+        ];
+
+        const MOTION_WORKS = [
+            { id: 'motion-1', title: 'ABCs of Camera Techniques', category: 'motion graphic', thumbnail: 'img/thumnails/abc.gif', description: ' I made the ABC book for the camera techniques.It is to study After Effect (especially 3D layer and camera) and the relationships between space, sound, form and time.', images: ['https://vimeo.com/891675941?fl=pl&fe=sh'] },
+            { id: 'motion-2', title: 'UN Sustainable Development Goals', category: 'animation & inforgraphic', thumbnail: 'img/thumnails/sdg.gif', description: 'SDG Goal 14:Life below water in the context of Canada', images: ['https://www.youtube.com/embed/RRaA8JzzE4A','https://www.youtube.com/embed/jEjdT1vkKZQ'] },
+            { id: 'motion-3', title: 'Why Do You Love Drawing?', category: 'motion graphic (Video Narrative)', thumbnail: 'img/thumnails/wdyld.gif', description: 'Sharing stories—verbally and visually—can help us create connections with others and provide access to a variety of ways of seeing everyday activities, situations, and things around us. The goal was to transform complex information into digestible and engaging forms of visual storytelling, merging factual information with artistic modes of delivery.', images: ['https://www.youtube.com/embed/9YelgebPNkw'] },
+           // { id: 'motion-4', title: 'Chiaroscuro Movement', category: 'motion', thumbnail: 'https://picsum.photos/seed/motion4/800/1000', description: '강렬한 명암 대비를 통해 고전 회화의 느낌을 모션 그래픽으로 구현했습니다.', images: ['https://picsum.photos/seed/m4-1/1200/800'] },
+            //{ id: 'motion-5', title: 'Retro-Futuristic Intro', category: 'motion', thumbnail: 'https://picsum.photos/seed/motion5/800/1000', description: '80년대 아날로그 감성과 미래의 사이버틱한 요소를 결합한 오프닝 타이틀입니다.', images: ['https://picsum.photos/seed/m5-1/1200/800'] }
+        ];
+
+        const ILLUSTRATIONS = [
+            { id: 'illu-1', url: './img/I/1.jpg' },
+            { id: 'illu-2', url: 'img/I/2.gif' },
+            { id: 'illu-3', url: 'img/I/3.gif' },
+            { id: 'illu-4', url: 'img/I/4.gif'},
+            { id: 'illu-5', url: './img/I/5.jpg' },
+            { id: 'illu-6', url: './img/I/6.jpg' },
+            
+           
+        ];
+
+     const PHOTOGRAPHY = [
+    { id: 'photo-1', url: './img/P/1.jpg' },
+    { id: 'photo-2', url: './img/P/2.jpg' },
+    { id: 'photo-3', url: './img/P/3.jpg' },
+    { id: 'photo-4', url: './img/P/4.jpg' },
+    { id: 'photo-5', url: './img/P/5.jpg' },
+    { id: 'photo-6', url: './img/P/6.png' },
+    { id: 'photo-7', url: './img/P/7.jpg' },
+    { id: 'photo-8', url: './img/P/8.jpg' },
+    { id: 'photo-9', url: './img/P/9.jpg' },
+    { id: 'photo-10', url: './img/P/10.jpg' },
+    { id: 'photo-11', url: './img/P/11.jpg' },
+    { id: 'photo-12', url: './img/P/12.jpg' },
+    { id: 'photo-13', url: './img/P/13.jpg' },
+    { id: 'photo-14', url: './img/P/14.jpg' },
+    { id: 'photo-15', url: './img/P/15.jpg' }
+];
+
+        // --- Components ---
+        const Header = () => {
+            const { theme } = useTheme();
+            const location = useLocation();
+            const [isMenuOpen, setIsMenuOpen] = useState(false);
+            const isLight = theme === 'light';
+            
+            const navItems = [
+                { label: 'GRAPHIC', path: '/' },
+                { label: 'MOTION', path: '/motion' },
+                { label: 'ILLUSTRATION', path: '/illustration' },
+                { label: 'PHOTOGRAPHY', path: '/photography' },
+                { label: 'ABOUT', path: '/about' },
+            ];
+
+            const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+
+            return (
+                <>
+                    <header className={`fixed top-0 left-0 w-full z-[210] transition-all duration-500 ${isLight ? 'bg-white/90 border-b-2 border-black backdrop-blur-md' : 'bg-black/80 backdrop-blur-md border-b border-white/10'}`}>
+                        <div className="max-w-[1440px] mx-auto px-6 h-20 md:h-24 flex items-center justify-between">
+                            <Link to="/" onClick={() => setIsMenuOpen(false)} className={`text-2xl font-bold tracking-tighter ${isLight ? 'font-serif text-black' : 'font-sans uppercase text-white'}`}>H_Jeong®</Link>
+                            
+                            <nav className="hidden lg:flex items-center space-x-6">
+                                {navItems.map((item) => (
+                                    <Link key={item.path} to={item.path} className={`text-[13px] tracking-widest px-2 whitespace-nowrap nav-link relative ${isLight ? 'font-serif font-medium text-black' : 'font-sans font-semibold text-gray-400 hover:text-white'} ${location.pathname === item.path ? (isLight ? 'border-b-1 border-black' : 'border-b-1 border-white text-white ') : ''}`}>{item.label}</Link>
+                                ))}
+                            </nav>
+
+                            <button onClick={toggleMenu} className={`lg:hidden p-2 relative transition-colors ${isLight ? 'text-black' : 'text-white'}`}>
+                                {isMenuOpen ? <X size={32} strokeWidth={2} /> : <Menu size={32} strokeWidth={2} />}
+                            </button>
+                        </div>
+                    </header>
+
+                    <div className={`fixed inset-0 z-[200] lg:hidden transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${isMenuOpen ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0 pointer-events-none'} ${isLight ? 'bg-white' : 'bg-black'}`}>
+                        <nav className="flex flex-col items-center justify-center h-full space-y-4 px-10 pt-16">
+                            {navItems.map((item) => (
+                            <Link 
+  key={item.path} 
+  to={item.path} 
+  onClick={() => setIsMenuOpen(false)} 
+  className={`text-[22px] md:text-[32px] tracking-tighter text-center w-full pb-3 border-b ${
+    isLight
+      ? `font-serif italic text-black border-black/10 ${location.pathname === item.path ? 'border-black' : ''}`
+      : `font-sans font-black uppercase border-white/10 ${
+          location.pathname === item.path ? 'border-white text-white' : 'text-white/60'
+        }`
+  }`}
+>
+  {item.label}
+</Link>
+
+                            ))}
+                        </nav>
+                    </div>
+                </>
+            );
+        };
+
+        const ProjectCard = ({ project }) => {
+            const { theme } = useTheme();
+            const isLight = theme === 'light';
+            return (
+                <Link to={`/work/${project.id}`} className="group block mb-16 animate-fadeIn">
+                    <div className={`aspect-[4/5] overflow-hidden mb-6 transition-all duration-700 ease-out ${isLight ? 'bg-white border-2 border-black group-hover:shadow-[12px_12px_0px_0px_rgba(0,0,0,1)]' : 'bg-[#1C1C1E] rounded-[3rem] shadow-2xl group-hover:scale-[1.02]'}`}>
+                        <img src={project.thumbnail} className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" />
+                    </div>
+                    <div className="space-y-3">
+                        <div className={`flex items-center justify-between border-b-2 pb-2 ${isLight ? 'border-black' : 'border-white/10'}`}>
+                            <span className={`text-[16px] uppercase tracking-[0.1em] ${isLight ? 'font-serif italic font-medium' : 'font-sans font-bold text-white opacity-70'}`}>{project.category}</span>
+                            <span className={`text-[14px] ${isLight ? 'font-mono' : 'font-sans text-blue-500'}`}>#{project.id.split('-')[1]}</span>
+                        </div>
+                        <h3 className={`text-[28px] leading-tight ${isLight ? 'font-serif font-light text-black' : 'font-sans font-bold tracking-tight text-white'}`}>{project.title}</h3>
+                    </div>
+                </Link>
+            );
+        };
+
+        const DetailPage = () => {
+            const { id } = useParams();
+            const { theme } = useTheme();
+            const isLight = theme === 'light';
+            const project = [...GRAPHIC_WORKS, ...MOTION_WORKS].find(p => p.id === id);
+            const isMotion = project.id.startsWith('motion');
+
+            useEffect(() => { window.scrollTo(0, 0); }, [id]);
+            if (!project) return null;
+
+            return (
+                <div className="animate-fadeIn relative">
+                    <div className="pt-32 md:pt-40 pb-40 px-6 max-w-[1440px] mx-auto">
+                        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 mb-32 items-start">
+                            <div className="lg:col-span-8">
+                                <h1 className={`text-[clamp(2.5rem,7vw,5.5rem)] leading-[0.9] mb-12 tracking-tighter ${isLight ? 'font-serif italic text-black' : 'font-sans font-bold uppercase text-white'}`}>{project.title}</h1>
+                                <div className={`overflow-hidden ${isLight ? 'border-2 border-black shadow-[15px_15px_0px_0px_rgba(0,0,0,1)]' : 'rounded-[3rem] shadow-2xl bg-zinc-900'}`}>
+                                    <img src={project.thumbnail} className="w-full h-auto" />
+                                </div>
+                            </div>
+                            <div className="lg:col-span-4 lg:pt-32">
+                                <div className={`p-10 ${isLight ? 'border-2 border-black shadow-[10px_10px_0px_0px_rgba(0,0,0,1)]' : 'bg-[#1C1C1E] rounded-[2.5rem] shadow-xl border border-white/5'}`}>
+                                    <h3 className="uppercase text-[12px] font-black mb-6 opacity-70 tracking-[0.2em]">Overview</h3>
+                                    <p className="text-[18px] md:text-[22px] leading-tight mb-12 font-light">{project.description}</p>
+                                    <div className={`grid grid-cols-2 gap-4 pt-10 border-t ${isLight ? 'border-black' : 'border-white/10 opacity-60'}`}>
+                                        <div><span className="block text-[11px] uppercase font-black opacity-70 mb-1">Category</span><span className="text-[16px] uppercase font-bold">{project.category}</span></div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 max-w-6xl mx-auto">
+                          {project.images && project.images.map((media, idx) => (
+  <div
+    key={idx}
+    className={`${idx % 3 === 0 ? 'md:col-span-2' : 'md:col-span-1'}
+    w-full overflow-hidden ${isLight ? 'border-2 border-black' : 'rounded-[2.5rem] bg-zinc-900 shadow-lg'}`}
+  >
+    {isMotion ? (
+      <iframe
+        src={media.replace('vimeo.com/', 'player.vimeo.com/video/')}
+        className="w-full aspect-[16/9]"
+        frameBorder="0"
+        allow="autoplay; fullscreen; picture-in-picture"
+        allowFullScreen
+      />
+    ) : (
+      <img
+        src={media}
+        className="w-full h-auto block hover:scale-105 transition-transform duration-1000"
+        loading="lazy"
+      />
+    )}
+  </div>
+))}
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        const HomePage = () => {
+            const { theme } = useTheme();
+            const isLight = theme === 'light';
+            return (
+                <div className="max-w-[1440px] mx-auto px-6 pt-32 md:pt-48 pb-24">
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 mb-32 md:mb-48 items-end animate-fadeIn">
+                        <div className="lg:col-span-8">
+                            <p className={`font-black mb-6 inline-block border-b-2 ${isLight ? 'border-black tracking-[0.2em]' : 'border-white text-white tracking-widest uppercase'}`}>SELECTED WORKS / VOL.26</p>
+                            <h1 className={`text-[clamp(3.5rem,10vw,8.5rem)] leading-[0.82] tracking-tighter ${isLight ? 'font-serif italic font-light text-black' : 'font-sans font-black uppercase text-white'}`}>Graphic Design</h1>
+                        </div>
+                        <div className="lg:col-span-4">
+                            <div className={`aspect-[16/10] overflow-hidden group relative ${isLight ? 'border-2 border-black' : 'rounded-[2.5rem] border border-white/15 bg-zinc-900 shadow-2xl'}`}>
+                                <img src="./img/2026.gif" className="w-full h-full object-cover" />
+                            </div>
+                        </div>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-12 gap-y-20">
+                        {GRAPHIC_WORKS.map((p) => <ProjectCard key={p.id} project={p} />)}
+                    </div>
+                </div>
+            );
+        };
+
+        const MotionPage = () => {
+            const { theme } = useTheme();
+            const isLight = theme === 'light';
+            return (
+               <div className="max-w-[1440px] mx-auto px-6 pt-32 md:pt-48 pb-24">
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 mb-32 md:mb-48 items-end animate-fadeIn">
+                        <div className="lg:col-span-8">
+                            
+                            <h1 className={`text-[clamp(3.5rem,10vw,8.5rem)] leading-[0.82] tracking-tighter ${isLight ? 'font-serif italic font-light text-black' : 'font-sans font-black uppercase text-white'}`}>Motion Design</h1>
+                        </div>
+                        <div className="lg:col-span-4">
+                            <div className={`aspect-[16/10] overflow-hidden group relative ${isLight ? 'border-2 border-black' : 'rounded-[2.5rem] border border-white/15 bg-zinc-900 shadow-2xl'}`}>
+                                <img src="./img/logo.gif" className="w-full h-full object-cover" />
+                            </div>
+                        </div>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16">
+                        {MOTION_WORKS.map(p => <ProjectCard key={p.id} project={p} />)}
+                    </div>
+                </div>
+            );
+        };
+
+        const IllustrationPage = () => {
+            const { theme } = useTheme();
+            const isLight = theme === 'light';
+            return (
+                <div className="max-w-[1440px] mx-auto px-6 pt-32 md:pt-48 pb-24 animate-fadeIn">
+                    <div className="mb-24 pb-12 border-b-2 border-current">
+                        <h1 className={`text-[clamp(2.5rem,8vw,5.5rem)] leading-[0.9] tracking-tighter mb-8 ${isLight ? 'font-serif italic text-black' : 'font-sans font-black uppercase text-white'}`}>Illustration</h1>
+                    </div>
+                    <div className="columns-1 md:columns-2 lg:columns-3 gap-10 space-y-10">
+                        {ILLUSTRATIONS.map(item => (
+                            <div key={item.id} className={`break-inside-avoid overflow-hidden transition-all duration-700 ${isLight ? 'border-2 border-black group hover:shadow-[12px_12px_0px_0px_rgba(0,0,0,1)]' : 'rounded-[2.5rem] hover:scale-[1.03] shadow-2xl bg-zinc-900'}`}>
+                                <img src={item.url} className={`w-full h-auto block ${isLight ? 'grayscale hover:grayscale-0 transition-all duration-500' : ''}`}/>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            );
+        };
+
+        const PhotographyPage = () => {
+            const { theme } = useTheme();
+            const isLight = theme === 'light';
+            return (
+                <div className="max-w-[1440px] mx-auto px-6 pt-32 md:pt-48 pb-24 animate-fadeIn">
+                    <div className="mb-24 pb-12 border-b-2 border-current">
+                        <h1 className={`text-[clamp(2.5rem,8vw,5.5rem)] leading-[0.9] tracking-tighter mb-8 ${isLight ? 'font-serif italic text-black' : 'font-sans font-black uppercase text-white'}`}>Photography</h1>
+                    </div>
+                    <div className="columns-2 md:columns-3 lg:columns-4 gap-6 space-y-6">
+                        {PHOTOGRAPHY.map(item => (
+                            <div key={item.id} className={`break-inside-avoid group relative overflow-hidden transition-all duration-1000 ${isLight ? 'border border-black/10' : 'rounded-2xl shadow-lg'}`}>
+                                <img src={item.url} className="w-full h-auto transition-all duration-1000 group-hover:scale-110"/>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            );
+        };
+
+        const AboutPage = () => {
+            const { theme } = useTheme();
+            const isLight = theme === 'light';
+            return (
+                <div className="max-w-[1440px] mx-auto px-6 pt-32 md:pt-48 pb-32 animate-fadeIn">
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-32">
+                        <div className="lg:col-span-5">
+                            <div className={`aspect-[4/5] overflow-hidden ${isLight ? 'border border-black/10' : 'rounded-[3.5rem] border border-white/20 shadow-2xl bg-zinc-900'}`}>
+                                <img src="./img/About.gif" className="w-full h-full object-cover grayscale" />
+                            </div>
+                        </div>
+                        <div className="lg:col-span-7 lg:pt-10">
+                            <h1 className={`text-[clamp(3rem,8vw,6rem)] leading-[1.0] mb-12 ${isLight ? 'font-serif italic text-black' : 'font-sans font-black uppercase text-white tracking-tighter'}`}>Hi, <br />I'm Hyeri</h1>
+                            
+                            <div className={`space-y-16 text-[22px] md:text-[26px] leading-tight max-w-2xl ${isLight ? 'font-serif text-black' : 'font-sans text-gray-200'}`}>
+                                <p className="font-light">Embracing various design styles, I aspire to be a versatile designer in graphic design, animations, and illustrations. I stay updated on design trends and techniques. 
+                                </p>
+
+                                <div className={`pt-16 border-t ${isLight ? 'border-black' : 'border-white/20'}`}>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
+                                        <div className="space-y-6">
+                                            <h3 className="text-[14px] uppercase font-bold tracking-widest opacity-40">Social Media</h3>
+                                            <div className="flex space-x-10">
+                                                <a href="https://www.instagram.com/h_jeong_0_0/" className="hover:opacity-50 transition-opacity"><Instagram size={28} strokeWidth={1.5} /></a>
+                                                <a href="https://www.linkedin.com/in/hyeri-jeong-01aa4122a/" className="hover:opacity-50 transition-opacity"><Linkedin size={28} strokeWidth={1.5} /></a>
+                                                
+                                            </div>
+                                        </div>
+                                        <div className="space-y-6">
+                                            <h3 className="text-[14px] uppercase font-bold tracking-widest opacity-40">Location</h3>
+                                            <p className="font-medium text-[20px]">Toronto, ON</p>
+                                        </div>
+                                    </div>
+
+                                    <div className="mt-20 space-y-8">
+                                        <h3 className="text-[14px] uppercase font-bold tracking-widest opacity-40">Contact</h3>
+                                       
+                                            hrjeong705@gmail.com
+                                    
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        // --- App Layout ---
+        const App = () => {
+            const [theme, setTheme] = useState('dark');
+            const toggleTheme = () => setTheme(prev => prev === 'light' ? 'dark' : 'light');
+
+            useEffect(() => {
+                const isLight = theme === 'light';
+                document.documentElement.setAttribute('data-theme', theme);
+                document.body.className = isLight ? 'selection-light' : 'selection-dark';
+                document.body.style.backgroundColor = isLight ? '#ffffff' : '#000000';
+                document.body.style.color = isLight ? '#000000' : '#ffffff';
+                document.body.style.fontFamily = isLight ? "'Playfair Display', serif" : "'Inter', sans-serif";
+            }, [theme]);
+
+            return (
+                <ThemeContext.Provider value={{ theme, toggleTheme }}>
+                    <Header />
+                    <Routes>
+                        <Route path="/" element={<HomePage />} />
+                        <Route path="/motion" element={<MotionPage />} />
+                        <Route path="/illustration" element={<IllustrationPage />} />
+                        <Route path="/photography" element={<PhotographyPage />} />
+                        <Route path="/about" element={<AboutPage />} />
+                        <Route path="/work/:id" element={<DetailPage />} />
+                        <Route path="*" element={<Navigate to="/" />} />
+                    </Routes>
+                    <button onClick={toggleTheme} className={`fixed bottom-10 right-10 z-[200] flex items-center justify-center transition-all duration-500 shadow-2xl ${theme === 'light' ? 'bg-white border-2 border-black text-black w-14 h-14 md:w-16 md:h-16 hover:shadow-[4px_4px_0px_0px_black]' : 'bg-white/10 backdrop-blur-2xl text-white w-14 h-14 md:w-16 md:h-16 rounded-full border border-white/20 hover:scale-110 active:scale-95'}`}>
+                        {theme === 'light' ? <Moon size={28} /> : <Sun size={28} />}
+                    </button>
+                </ThemeContext.Provider>
+            );
+        };
+
+        const start = () => {
+            const root = createRoot(document.getElementById('root'));
+            root.render(<StrictMode><HashRouter><App /></HashRouter></StrictMode>);
+        };
+        document.readyState === 'loading' ? document.addEventListener('DOMContentLoaded', start) : start();
+    </script>
+<script type="module" src="/index.tsx"></script>
+</body>
+</html>

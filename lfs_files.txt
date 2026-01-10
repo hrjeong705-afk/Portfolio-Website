@@ -1,0 +1,11 @@
+img/2026.gif
+img/About.gif
+img/I/2.gif
+img/I/3.gif
+img/I/4.gif
+img/M/1.png
+img/P/6.PNG
+img/logo.gif
+img/thumnails/abc.gif
+img/thumnails/sdg.gif
+img/thumnails/wdyld.gif
