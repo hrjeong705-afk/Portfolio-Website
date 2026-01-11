@@ -174,11 +174,32 @@
                         <div className="max-w-[1440px] mx-auto px-6 h-20 md:h-24 flex items-center justify-between">
                             <Link to="/" onClick={() => setIsMenuOpen(false)} className={`text-2xl font-bold tracking-tighter ${isLight ? 'font-serif text-black' : 'font-sans uppercase text-white'}`}>H_Jeong®</Link>
                             
-                            <nav className="hidden lg:flex items-center space-x-6">
-                                {navItems.map((item) => (
-                                    <Link key={item.path} to={item.path} className={`text-[13px] tracking-widest px-2 whitespace-nowrap nav-link relative ${isLight ? 'font-serif font-medium text-black' : 'font-sans font-semibold text-gray-400 hover:text-white'} ${location.pathname === item.path ? (isLight ? 'border-b-1 border-black' : 'border-b-1 border-white text-white ') : ''}`}>{item.label}</Link>
-                                ))}
-                            </nav>
+                           <nav className="hidden lg:flex items-center space-x-6">
+{navItems.map((item) => (
+  <Link
+    key={item.path}
+    to={item.path}
+    className={`nav-link relative text-[13px] tracking-widest px-2 whitespace-nowrap
+      ${isLight
+        ? `font-serif font-medium text-black ${
+            location.pathname === item.path
+              ? 'after:w-full after:absolute after:bottom-[-4px] after:h-[2px] after:bg-black'
+              : 'after:w-0'
+          }`
+        : `font-sans font-semibold ${
+            location.pathname === item.path
+              ? 'text-white'
+              : 'text-gray-400 hover:text-white'
+          }`
+      }
+    `}
+  >
+    {item.label}
+  </Link>
+))}
+
+</nav>
+
 
                             <button onClick={toggleMenu} className={`lg:hidden p-2 relative transition-colors ${isLight ? 'text-black' : 'text-white'}`}>
                                 {isMenuOpen ? <X size={32} strokeWidth={2} /> : <Menu size={32} strokeWidth={2} />}
@@ -186,27 +207,34 @@
                         </div>
                     </header>
 
-                    <div className={`fixed inset-0 z-[200] lg:hidden transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${isMenuOpen ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0 pointer-events-none'} ${isLight ? 'bg-white' : 'bg-black'}`}>
-                        <nav className="flex flex-col items-center justify-center h-full space-y-4 px-10 pt-16">
-                            {navItems.map((item) => (
-                            <Link 
-  key={item.path} 
-  to={item.path} 
-  onClick={() => setIsMenuOpen(false)} 
-  className={`text-[22px] md:text-[32px] tracking-tighter text-center w-full pb-3 border-b ${
-    isLight
-      ? `font-serif italic text-black border-black/10 ${location.pathname === item.path ? 'border-black' : ''}`
-      : `font-sans font-black uppercase border-white/10 ${
-          location.pathname === item.path ? 'border-white text-white' : 'text-white/60'
-        }`
-  }`}
->
-  {item.label}
-</Link>
+     <div className={`fixed inset-0 z-[200] lg:hidden transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${isMenuOpen ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0 pointer-events-none'} ${isLight ? 'bg-white' : 'bg-black'}`}>
+  <nav className="flex flex-col items-center justify-center h-full space-y-4 px-10 pt-16">
+    {navItems.map((item) => (
+      <Link 
+        key={item.path} 
+        to={item.path} 
+        onClick={() => setIsMenuOpen(false)} 
+        className={`text-[22px] md:text-[32px] tracking-tighter text-center w-full pb-3 border-b
+          ${isLight
+            ? `font-serif italic text-black ${
+                location.pathname === item.path
+                  ? 'border-black'       // 클릭된 메뉴는 검정
+                  : 'border-black/20'   // 나머지는 흐린 선
+              }`
+            : `font-sans font-black uppercase ${
+                location.pathname === item.path
+                  ? 'border-white text-white'      // 클릭된 메뉴
+                  : 'border-white/20 text-white/60' // 나머지 흐린
+              }`
+          }
+        `}
+      >
+        {item.label}
+      </Link>
+    ))}
+  </nav>
+</div>
 
-                            ))}
-                        </nav>
-                    </div>
                 </>
             );
         };
@@ -296,27 +324,41 @@ useEffect(() => {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 max-w-6xl mx-auto">
-            {project.images && project.images.map((media, idx) => (
-              <div key={idx} className={`${idx % 3 === 0 ? 'md:col-span-2' : 'md:col-span-1'} w-full overflow-hidden ${isLight ? 'border-2 border-black' : 'rounded-[2.5rem] bg-zinc-900 shadow-lg'}`}>
-                {isMotion ? (
-                  <iframe
-                    src={media.replace('vimeo.com/', 'player.vimeo.com/video/')}
-                    className="w-full aspect-[16/9]"
-                    frameBorder="0"
-                    allow="autoplay; fullscreen; picture-in-picture"
-                    allowFullScreen
-                  />
-                ) : (
-                  <img
-                    src={media}
-                    className="w-full h-auto block hover:scale-105 transition-transform duration-1000"
-                    
-                  />
-                )}
-              </div>
-            ))}
-          </div>
+         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 max-w-6xl mx-auto">
+  {project.images && project.images.map((media, idx) => {
+    const isMotion = project.id.startsWith('motion');
+    const isSpecialImage = project.id === 'graphic-6' && media.endsWith('4.jpg'); // aesté 4.jpg 예외
+
+    return (
+      <div
+        key={idx}
+        className={`${
+          idx % 3 === 0 ? 'md:col-span-2' : 'md:col-span-1'
+        } w-full overflow-hidden ${
+          isLight ? 'border-2 border-black' : 'rounded-[2.5rem] bg-zinc-900 shadow-lg'
+        }`}
+      >
+        {isMotion ? (
+          <iframe
+            src={media.replace('vimeo.com/', 'player.vimeo.com/video/')}
+            className="w-full aspect-[16/9]"
+            frameBorder="0"
+            allow="autoplay; fullscreen; picture-in-picture"
+            allowFullScreen
+          />
+        ) : (
+          <img
+            src={media}
+            className={`w-full block transition-transform duration-1000 hover:scale-105 ${
+              isSpecialImage ? 'h-auto mx-auto' : 'h-full object-cover'
+            }`}
+          />
+        )}
+      </div>
+    );
+  })}
+</div>
+
         </div>
       </div>
     </>
