@@ -90,19 +90,42 @@
 
         // --- Constants ---
         const GRAPHIC_WORKS = [
-            { id: 'graphic-1', title: 'CIAO', category: 'Branding', thumbnail: './img/thumnails/ciao.jpg', description: 'CIAO! is a pasta to-go restaurant offering, a fresh, modern take on Italian food.The goal was to capture the casual, youthful spirit of a pasta to-go brand while keepinga bold and modern edge.',
-            
+            { id: 'graphic-1', title: 'CIAO', category: 'Branding', thumbnail: './img/thumnails/ciao.jpg', description: (
+      <>  CIAO! is a pasta to-go restaurant offering a fresh, modern take on Italian food. The goal was to capture the casual, youthful spirit of a pasta to-go brand while keeping a bold and modern edge.
+        <br />
+        <br />
+      <strong className="font-bold">#Unfiltered #Modern #Youthful #Bold</strong>
+      </>
+    ),
+  
             images: ['./img/G1/1.jpg', './img/G1/2.jpg', './img/G1/3.jpg', './img/G1/4.jpg'] },
-            { id: 'graphic-2', title: 'one zero', category: 'Branding & Package Design', thumbnail: './img/thumnails/onezero.jpg', description: 'ONEZERO is a sparkling protein water brand. The goal was  goal was to show the fizzy and refreshing feeling of sparkling drinks.', 
+            { id: 'graphic-2', title: 'one zero', category: 'Branding & Package Design', thumbnail: './img/thumnails/onezero.jpg', description: 
+            (<> ONEZERO is a sparkling protein water brand. The goal was  goal was to show the fizzy and refreshing feeling of sparkling drinks.
+                <br /><br/>
+                <strong className="font-bold">#Modern #Fresh #Fun #Inovative #playful</strong> </>
+             ),
             images: ['./img/G2/1.jpg', './img/G2/2.jpg', './img/G2/3.jpg', './img/G2/4.jpg','./img/G2/5.jpg','./img/G2/6.jpg'] },
             { id: 'graphic-3', title: 'Thomas Miller', category: 'Book & Editorial Design', thumbnail: './img/thumnails/TM.jpg', description: 'Thomas Miller was among the pioneers of African American designers celebrated at the DuSable Museum of African American Hisotry in Chicago in 2000. The goal was to go back to both learn more about his legacy and practice my editorial design skills.', 
             images: ['./img/G3/1.jpg', './img/G3/2.jpg', './img/G3/3.jpg', './img/G3/4.jpg', './img/G3/5.jpg', './img/G3/6.jpg','./img/G3/7.jpg'] },
-            { id: 'graphic-4', title: 'RASTRO', category: 'Branding & Package Design', thumbnail: './img/thumnails/Rastro.jpg', description: 'Rastro means “trail” or “trace” in Spanish. It’s about the journey from agave to spirit — raw, earthy, and made for people who care about the process as much as the product The goal was to show its process and how something raw and grounded can still feel premium.', 
+            { id: 'graphic-4', title: 'RASTRO', category: 'Branding & Package Design', thumbnail: './img/thumnails/Rastro.jpg', description: (<> Rastro means “trail” or “trace” in Spanish. 
+            It’s about the journey from agave to spirit — raw, earthy, and made for people who care about the process as much as the product The goal was to show its process and how something raw and grounded can still feel premium.
+             <br /><br/>
+                <strong className="font-bold">#Raw #Earthy #Craft #Modern #Bold</strong> </>
+             ),
             images: ['./img/G4/1.jpg', './img/G4/2.jpg', './img/G4/3.jpg', './img/G4/4.jpg'] },
-            { id: 'graphic-5', title: 'Tropina', category: 'Branding & Package Design', thumbnail: './img/thumnails/Tropina.jpg', description: 'Tropina is a coconut water brand. The goal was to capture the lightness and freshness of coconut water through the design itself.', 
+            { id: 'graphic-5', title: 'Tropina', category: 'Branding & Package Design', thumbnail: './img/thumnails/Tropina.jpg', description: ( <>Tropina is a coconut water brand. The goal was to capture the lightness and freshness of coconut water through the design itself.
+                <br /><br/>
+                    <strong className="font-bold">#Tropical #Fresh #Natural #Hydrating</strong> </>
+                ),
+            
             images: ['./img/G5/1.jpg', './img/G5/2.jpg', './img/G5/3.jpg', './img/G5/4.jpg'] },
-            { id: 'graphic-6', title: 'aesté', category: 'Branding & Package Design', thumbnail: './img/thumnails/aeste.jpg', description: 'Aesté is a brand that offers premium aromatherapy and home fragrance products. The goal was to express the calm, elegant world of scents — something that feels still, intentional, and quietly luxurious.',
-             images: ['./img/G6/1.jpg', './img/G6/2.jpg', './img/G6/3.jpg', './img/G6/4.jpg'] },
+            { id: 'graphic-6', title: 'aesté', category: 'Branding & Package Design', thumbnail: './img/thumnails/aeste.jpg', description: (<>Aesté is a brand that offers premium aromatherapy and home fragrance products. The goal was to express the calm, elegant world of scents — something that feels still, intentional, and quietly luxurious.
+                <br /><br/>
+                    <strong className="font-bold">#Premium #Modern #Tranquil #Elegant</strong> </>
+                ),
+           
+           
+            images: ['./img/G6/1.jpg', './img/G6/2.jpg', './img/G6/3.jpg', './img/G6/4.jpg'] },
            // { id: 'graphic-7', title: 'Metrique Sans Font Lab', category: 'graphic', thumbnail: 'https://picsum.photos/seed/agency7/800/1000', description: '건축적 비례에서 영감을 받아 설계된 기하학적 산세리프 서체 Metrique의 개발 과정입니다.', images: ['https://picsum.photos/seed/a7-1/1200/800'] },
            // { id: 'graphic-8', title: 'Root Organic Brewery', category: 'graphic', thumbnail: 'https://picsum.photos/seed/agency8/800/1000', description: '흙과 뿌리의 질감을 핸드 드로잉 스타일로 풀어낸 유기농 맥주 브랜딩입니다.', images: ['https://picsum.photos/seed/a8-1/1200/800'] },
            // { id: 'graphic-9', title: 'Obsidian Tech Vision', category: 'graphic', thumbnail: 'https://picsum.photos/seed/agency9/800/1000', description: '미래 지향적 하이테크 솔루션 기업 Obsidian의 비주얼 아이덴티티입니다.', images: ['https://picsum.photos/seed/a9-1/1200/800'] },
@@ -314,7 +337,7 @@ useEffect(() => {
               <div className={`p-10 ${isLight ? 'border-2 border-black shadow-[10px_10px_0px_0px_rgba(0,0,0,1)]' : 'bg-[#1C1C1E] rounded-[2.5rem] shadow-xl border border-white/5'}`}>
                 <h3 className="uppercase text-[12px] font-black mb-6 opacity-70 tracking-[0.2em]">Overview</h3>
                 <p className="text-[18px] md:text-[22px] leading-tight mb-12 font-light">{project.description}</p>
-                <div className={`grid grid-cols-2 gap-4 pt-10 border-t ${isLight ? 'border-black' : 'border-white/10 opacity-60'}`}>
+                <div className={`grid grid-cols-1 gap-4 pt-10 border-t ${isLight ? 'border-black' : 'border-white/10 opacity-60'}`}>
                   <div>
                     <span className="block text-[11px] uppercase font-black opacity-70 mb-1">Category</span>
                     <span className="text-[16px] uppercase font-bold">{project.category}</span>
