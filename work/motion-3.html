@@ -1,6 +1,13 @@
 <!DOCTYPE html>
 <html lang="ko" data-theme="light">
 <head>
+<script>
+  // Apply saved theme immediately before render to prevent flash
+  (function(){
+    var t = localStorage.getItem('hj-theme') || 'light';
+    document.documentElement.setAttribute('data-theme', t);
+  })();
+</script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>H_Jeong® | Why Do You Love Drawing?</title>
@@ -83,7 +90,11 @@
 
   <!-- Media grid -->
   <div style="display:grid;grid-template-columns:1fr;gap:2rem;max-width:1200px;margin:0 auto;" id="media-grid">
-    <div class="img-cell media-row" style="grid-column: 1 / -1;"><iframe src="https://www.youtube.com/embed/9YelgebPNkw" class="w-full" style="aspect-ratio:16/9;border:none;display:block;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
+    <div class="img-cell media-row" style="grid-column: 1 / -1;">
+      <iframe src="https://www.youtube.com/embed/9YelgebPNkw?rel=0" style="width:100%;aspect-ratio:16/9;border:none;display:block;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    </div>
+  </div>
+  </div>
 
   </div>
 </div>
