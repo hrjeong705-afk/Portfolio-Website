@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>H_Jeong® | Motion Design</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root{--bg:#ffffff;--fg:#000000}[data-theme="dark"]{--bg:#000000;--fg:#ffffff}
+    *{box-sizing:border-box}body{margin:0;padding:0;background-color:var(--bg);color:var(--fg);transition:background-color 0.5s cubic-bezier(0.4,0,0.2,1),color 0.5s ease;-webkit-font-smoothing:antialiased;overflow-x:hidden}::-webkit-scrollbar{display:none}
+    .font-serif{font-family:'Playfair Display',serif}.font-sans{font-family:'Inter',sans-serif}
+    @keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}.animate-fadeIn{animation:fadeIn 0.8s cubic-bezier(0.16,1,0.3,1) forwards}
+    .nav-link{position:relative}.nav-link::after{content:'';position:absolute;width:0;height:2px;bottom:-4px;left:0;background-color:currentColor;transition:width 0.3s ease}.nav-link:hover::after{width:100%}.nav-link.active::after{width:100%}
+    #mobile-menu{transition:transform 0.5s cubic-bezier(0.16,1,0.3,1),opacity 0.5s ease}#mobile-menu.open{transform:translateY(0);opacity:1;pointer-events:all}#mobile-menu.closed{transform:translateY(-100%);opacity:0;pointer-events:none}
+    .proj-card{display:block;margin-bottom:4rem;text-decoration:none;color:inherit;animation:fadeIn 0.8s ease forwards}
+    .card-img-wrap{aspect-ratio:4/5;overflow:hidden;margin-bottom:1.5rem;transition:all 0.7s ease-out}
+    .card-img-wrap img{width:100%;height:100%;object-fit:cover;transition:transform 1s ease;display:block}.proj-card:hover .card-img-wrap img{transform:scale(1.1)}
+    [data-theme="light"] .card-img-wrap{background:white;border:2px solid black}[data-theme="light"] .proj-card:hover .card-img-wrap{box-shadow:12px 12px 0px 0px rgba(0,0,0,1)}
+    [data-theme="dark"] .card-img-wrap{background:#1C1C1E;border-radius:3rem;box-shadow:0 25px 50px -12px rgba(0,0,0,.8)}[data-theme="dark"] .proj-card:hover .card-img-wrap{transform:scale(1.02)}
+    .cat-row{display:flex;align-items:center;justify-content:space-between;padding-bottom:0.5rem;border-bottom:2px solid;margin-bottom:0.75rem}
+    [data-theme="light"] .cat-row{border-color:black}[data-theme="dark"] .cat-row{border-color:rgba(255,255,255,0.1)}
+    .cat-label{font-size:16px;text-transform:uppercase;letter-spacing:0.1em}[data-theme="light"] .cat-label{font-family:'Playfair Display',serif;font-style:italic;font-weight:500}[data-theme="dark"] .cat-label{font-family:'Inter',sans-serif;font-weight:700;opacity:0.7}
+    .cat-num{font-size:14px}[data-theme="light"] .cat-num{font-family:monospace}[data-theme="dark"] .cat-num{font-family:'Inter',sans-serif;color:#3b82f6}
+    .card-title{font-size:28px;line-height:1.1}[data-theme="light"] .card-title{font-family:'Playfair Display',serif;font-weight:300}[data-theme="dark"] .card-title{font-family:'Inter',sans-serif;font-weight:700;letter-spacing:-0.02em}
+    [data-theme="light"] #hero-img-wrap{border:2px solid black}[data-theme="dark"] #hero-img-wrap{border-radius:2.5rem;border:1px solid rgba(255,255,255,0.15);background:#18181b;box-shadow:0 25px 50px -12px rgba(0,0,0,.8)}
+    [data-theme="light"] header{background:rgba(255,255,255,0.9);border-bottom:2px solid black}[data-theme="dark"] header{background:rgba(0,0,0,0.8);border-bottom:1px solid rgba(255,255,255,0.1)}
+    [data-theme="light"] #mobile-menu{background:white}[data-theme="dark"] #mobile-menu{background:black}
+    [data-theme="light"] #theme-toggle{background:white;border:2px solid black;color:black}[data-theme="light"] #theme-toggle:hover{box-shadow:4px 4px 0px 0px black}
+    [data-theme="dark"] #theme-toggle{background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);color:white;border-radius:9999px}[data-theme="dark"] #theme-toggle:hover{transform:scale(1.1)}
+
+    /* Responsive card grid */
+    #cards-grid {
+      grid-template-columns: repeat(1, 1fr) !important;
+    }
+    @media (min-width: 768px) {
+      #cards-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+      }
+    }
+    @media (min-width: 1024px) {
+      #cards-grid {
+        grid-template-columns: repeat(3, 1fr) !important;
+      }
+    }
+      </style>
+</head>
+<body class="light-mode">
+
+<header class="fixed top-0 left-0 w-full z-[210] backdrop-blur-md" style="transition:background 0.5s,border 0.5s;">
+  <div class="max-w-[1440px] mx-auto px-6 flex items-center justify-between" style="height:5rem;">
+    <a href="index.html" id="logo" class="text-2xl font-bold tracking-tighter font-serif" style="text-decoration:none;color:inherit;">H_Jeong®</a>
+    <nav class="hidden lg:flex items-center space-x-6">
+      <a href="index.html"        class="nav-link text-[13px] tracking-widest px-2 whitespace-nowrap" style="text-decoration:none;color:inherit;">GRAPHIC</a>
+      <a href="motion.html"       class="nav-link active text-[13px] tracking-widest px-2 whitespace-nowrap" style="text-decoration:none;color:inherit;">MOTION</a>
+      <a href="illustration.html" class="nav-link text-[13px] tracking-widest px-2 whitespace-nowrap" style="text-decoration:none;color:inherit;">ILLUSTRATION</a>
+      <a href="photography.html"  class="nav-link text-[13px] tracking-widest px-2 whitespace-nowrap" style="text-decoration:none;color:inherit;">PHOTOGRAPHY</a>
+      <a href="about.html"        class="nav-link text-[13px] tracking-widest px-2 whitespace-nowrap" style="text-decoration:none;color:inherit;">ABOUT</a>
+    </nav>
+    <button id="menu-btn" class="lg:hidden p-2" style="background:none;border:none;cursor:pointer;color:inherit;">
+      <svg id="icon-open" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg>
+      <svg id="icon-close" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none;"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+</header>
+
+<div id="mobile-menu" class="fixed inset-0 z-[200] lg:hidden closed">
+  <nav class="flex flex-col items-center justify-center h-full space-y-4 px-10 pt-16">
+    <a href="index.html"        class="mobile-link text-[22px] md:text-[32px] tracking-tighter text-center w-full pb-3 border-b font-serif italic" style="text-decoration:none;color:inherit;">GRAPHIC</a>
+    <a href="motion.html"       class="mobile-link active text-[22px] md:text-[32px] tracking-tighter text-center w-full pb-3 border-b font-serif italic" style="text-decoration:none;color:inherit;">MOTION</a>
+    <a href="illustration.html" class="mobile-link text-[22px] md:text-[32px] tracking-tighter text-center w-full pb-3 border-b font-serif italic" style="text-decoration:none;color:inherit;">ILLUSTRATION</a>
+    <a href="photography.html"  class="mobile-link text-[22px] md:text-[32px] tracking-tighter text-center w-full pb-3 border-b font-serif italic" style="text-decoration:none;color:inherit;">PHOTOGRAPHY</a>
+    <a href="about.html"        class="mobile-link text-[22px] md:text-[32px] tracking-tighter text-center w-full pb-3 border-b font-serif italic" style="text-decoration:none;color:inherit;">ABOUT</a>
+  </nav>
+</div>
+
+<button id="theme-toggle" class="fixed bottom-10 right-10 z-[200] flex items-center justify-center transition-all duration-500 shadow-2xl" style="width:3.5rem;height:3.5rem;cursor:pointer;">
+  <svg id="icon-moon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9z"/></svg>
+  <svg id="icon-sun"  width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="display:none;"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+</button>
+
+<main class="max-w-[1440px] mx-auto px-6 pb-24" style="padding-top:8rem;">
+  <div class="animate-fadeIn" style="display:grid;grid-template-columns:1fr;gap:3rem;margin-bottom:8rem;align-items:flex-end;">
+    <div>
+      <h1 id="hero-h1" class="leading-[0.82] tracking-tighter font-serif italic font-light" style="font-size:clamp(3.5rem,10vw,8.5rem);">Motion Design</h1>
+    </div>
+    <div>
+      <div id="hero-img-wrap" class="overflow-hidden" style="aspect-ratio:16/10;">
+        <img src="./img/logo.gif" style="width:100%;height:100%;object-fit:cover;" alt="logo" />
+      </div>
+    </div>
+  </div>
+  <div id="cards-grid" style="display:grid;gap:3rem;">
+    <a href="work/motion-1.html" class="proj-card" style="animation-delay:0s">
+      <div class="card-img-wrap"><img src="./img/thumnails/abc.gif" alt="ABC Camera" /></div>
+      <div class="cat-row"><span class="cat-label">motion graphic</span><span class="cat-num">#1</span></div>
+      <h3 class="card-title">ABC's of Camera Techniques</h3>
+    </a>
+    <a href="work/motion-2.html" class="proj-card" style="animation-delay:0.1s">
+      <div class="card-img-wrap"><img src="./img/thumnails/sdg.gif" alt="SDG" /></div>
+      <div class="cat-row"><span class="cat-label">animation & infographic</span><span class="cat-num">#2</span></div>
+      <h3 class="card-title">UN Sustainable Development Goals</h3>
+    </a>
+    <a href="work/motion-3.html" class="proj-card" style="animation-delay:0.2s">
+      <div class="card-img-wrap"><img src="./img/thumnails/wdyld.gif" alt="Drawing" /></div>
+      <div class="cat-row"><span class="cat-label">motion graphic (Video Narrative)</span><span class="cat-num">#3</span></div>
+      <h3 class="card-title">Why Do You Love Drawing?</h3>
+    </a>
+  </div>
+</main>
+
+<script>
+const html=document.documentElement;let theme=localStorage.getItem('hj-theme')||'light';
+function setTheme(t){theme=t;localStorage.setItem('hj-theme',t);html.setAttribute('data-theme',t);document.body.classList.toggle('light-mode',t==='light');document.body.classList.toggle('dark-mode',t==='dark');document.getElementById('icon-moon').style.display=t==='light'?'block':'none';document.getElementById('icon-sun').style.display=t==='dark'?'block':'none';const logo=document.getElementById('logo');logo.style.fontFamily=t==='light'?"'Playfair Display',serif":"'Inter',sans-serif";logo.style.textTransform=t==='dark'?'uppercase':'none';document.querySelectorAll('.mobile-link').forEach(l=>{l.style.borderColor=t==='light'?(l.classList.contains('active')?'black':'rgba(0,0,0,0.2)'):(l.classList.contains('active')?'white':'rgba(255,255,255,0.2)');l.style.fontFamily=t==='light'?"'Playfair Display',serif":"'Inter',sans-serif";l.style.fontWeight=t==='dark'?'900':'normal';l.style.textTransform=t==='dark'?'uppercase':'none';l.style.fontStyle=t==='light'?'italic':'normal';});}
+document.getElementById('theme-toggle').addEventListener('click',()=>setTheme(theme==='light'?'dark':'light'));setTheme(theme);
+const menuBtn=document.getElementById('menu-btn'),mobileMenu=document.getElementById('mobile-menu'),iconOpen=document.getElementById('icon-open'),iconClose=document.getElementById('icon-close');let menuOpen=false;
+menuBtn.addEventListener('click',()=>{menuOpen=!menuOpen;mobileMenu.classList.toggle('open',menuOpen);mobileMenu.classList.toggle('closed',!menuOpen);iconOpen.style.display=menuOpen?'none':'block';iconClose.style.display=menuOpen?'block':'none';});
+function heroGrid(){const hero=document.querySelector('main>.animate-fadeIn');if(window.innerWidth>=1024){hero.style.gridTemplateColumns='2fr 1fr';}else{hero.style.gridTemplateColumns='1fr';}}heroGrid();window.addEventListener('resize',heroGrid);
+</script>
+</body>
+</html>
