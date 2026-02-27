@@ -216,6 +216,10 @@ function setTheme(t) {
   // Logo font tweak
   const logo = document.getElementById('logo');
   logo.style.fontFamily = t==='light' ? "'Playfair Display',serif" : "'Inter',sans-serif";
+  const h1 = document.getElementById('hero-h1');
+h1.style.fontFamily = t==='light' ? "'Playfair Display',serif" : "'Inter',sans-serif";
+h1.style.fontStyle  = t==='light' ? 'italic' : 'normal';
+h1.style.fontWeight = t==='dark'  ? '900' : '300';
   logo.style.textTransform = t==='dark' ? 'uppercase' : 'none';
   // Mobile links border
   document.querySelectorAll('.mobile-link').forEach(l => {
